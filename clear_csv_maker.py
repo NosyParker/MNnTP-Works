@@ -20,10 +20,11 @@ def replace_spaces_with_semicolon(raw_csv):
     with open(raw_csv, "r") as input_file:
         for line in input_file:
             line = re.sub(r"\s+", ";", line)
-            line = re.sub(r"\|", "", line)
+            line = line[:-1]
+            line = line + "\n"
             correct_lines.append(line)
 
-    correct_lines[0] = re.sub(r";;", ";", correct_lines[0])
+    correct_lines[0] = re.sub(r";\|","",correct_lines[0])
 
     with open(raw_csv, "w") as output_file:
         for correct_line in correct_lines:
