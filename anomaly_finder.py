@@ -32,3 +32,30 @@ def explain_anomalies_rolling_std(y, window_size, sigma=1.0):
                                                        for index, y_i, avg_i, rs_i in zip(count(),
                                                                                            y, avg_list, rolling_std)
               if (y_i > avg_i + (sigma * rs_i)) | (y_i < avg_i - (sigma * rs_i))])}
+
+
+def plot_results(x, y, window_size, sigma_value=1,
+                 text_xlabel="Минуты *какого-то дня*", text_ylabel="Значение *характеристики*"):
+    """ 
+    Генерирует график и отмечает звездочками на нем аномалии.
+
+    """
+    plt.figure(figsize=(15, 8))
+    plt.plot(x, y, "k.", markersize=16)
+    y_av = calc_moving_average(y, window_size)
+    plt.plot(x, y_av, color='green')
+    plt.xlabel(text_xlabel)
+    plt.ylabel(text_ylabel)
+
+    events = {}
+    events = explain_anomalies_rolling_std(y, window_size=window_size, sigma=sigma_value)
+
+
+    x_anomaly = [x for x in events["anomalies_dict"].keys()]
+    y_anomaly = [y for y in events["anomalies_dict"].values()]
+    print(x_anomaly, "Минуты")
+    print(y_anomaly, "Значения")
+    plt.plot(x_anomaly, y_anomaly, "r*", markersize=12)
+
+    plt.grid(True)
+    plt.show()
