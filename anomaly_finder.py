@@ -59,3 +59,17 @@ def plot_results(x, y, window_size, sigma_value=1,
 
     plt.grid(True)
     plt.show()
+
+
+def anomaly_to_nan(data, column, indexes_of_events, output_csv):
+    """ 
+    Заменяет аномальные значения в датасете (data) для указанной характеристики (параметр column) на NaN,
+    используя индексы аномалий (indexes_of_events), и записывает датасет в выходной CSV (output_csv).
+
+    """
+    for row, value in enumerate(data[column]):
+        for index, val in enumerate(indexes_of_events):
+            if row == val:
+                data[column][row] = None
+
+    data.to_csv(output_csv, index = False, na_rep = "NaN", sep=";")
