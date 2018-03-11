@@ -4,3 +4,4 @@
 .vscode
 *.csv
 *.min
+*.pyc
