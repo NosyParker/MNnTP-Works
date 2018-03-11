@@ -1,6 +1,6 @@
 import re
 
-def make_csv_from_original_data(original_filename, output_csv):
+def make_csv_from_original_data(original_filename, output_csv, comments_end = 28):
     original_file = open(original_filename, "r")
 
     lines = original_file.readlines()
@@ -8,7 +8,7 @@ def make_csv_from_original_data(original_filename, output_csv):
 
     output_csv = open(output_csv, "w")
 
-    for line in lines[28:]:
+    for line in lines[comments_end:]:
         output_csv.write(line)
 
     output_csv.close()
